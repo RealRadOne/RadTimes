@@ -3,8 +3,8 @@ URL=$1
 function parse()
 {
   while read URL;do
-    echo "$URL"
-    curl "$URL" | sed -n 's/.*href="\([^"]*\).*/\1/p' >links.txt
+    curl "$URL" | grep -E 'title>|link>' |\
+    sed -e 's/<title>//' -e 's/<\/title>//' -e 's/<link>/   /' -e 's/<\/link>//' 
   done<feed.txt
 }
 parse 
